@@ -1,0 +1,18 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: aspnet-core-webapi-vs
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - app-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /test
+    route:
+    - destination:
+        host: aspnet-core-web-api.default.svc.cluster.local
+        port:
+          number: 80

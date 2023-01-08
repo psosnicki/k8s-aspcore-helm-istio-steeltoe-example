@@ -1,0 +1,7 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: aspnet-core-web-api-cm
+  namespace: {{ .Release.Namespace }}
+data: {{- toYaml .Values.config | nindent 4 }}
+

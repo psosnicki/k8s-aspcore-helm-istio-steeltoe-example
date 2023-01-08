@@ -1,0 +1,96 @@
+replicaCount: 3
+
+image:
+  repository: aspnet-core-web-api
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: "aspnet-core-web-api"
+
+serviceAccount:
+  name: "pod-service-account"
+
+#service account for pod
+pod-service-account:
+  fullnameOverride: "pod-service-account"
+  allowedResources:
+    - configmaps
+    - secrets
+  allowedVerbs:
+    - get
+    - list
+    - watch
+  apiGroups:
+    - ""
+    - rbac.authorization.k8s.io
+
+config:
+  config-map-test: "this is config map test"
+
+podAnnotations: {}
+
+podSecurityContext:
+  {}
+  # fsGroup: 2000
+
+securityContext:
+  {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: "" #add to hosts file
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: aspnet-core-web-api
+              port:
+                number: 80
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

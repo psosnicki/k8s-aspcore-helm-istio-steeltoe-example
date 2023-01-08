@@ -1,0 +1,6 @@
+dependencies:
+- name: k8s-pod-service-account
+  repository: https://psosnicki.github.io/helm3-repo/stable
+  version: 1.0.0
+digest: sha256:718f1b413a28887ae87da306aad43619d5b4df2b281168b784e2970d26647898
+generated: "2023-01-04T14:21:40.8418689+01:00"
